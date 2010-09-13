@@ -1,3 +1,6 @@
+;;;; unittest framework
+;;;; original designed by Peter Seibel (Practical Common Lisp)
+
 (defpackage :unittest
   (:use :common-lisp)  ; cl パッケージのシンボルを全部インポートして使えるようにする
   (:export :deftest)) ; deftest シンボルを API として公開する
