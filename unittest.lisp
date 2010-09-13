@@ -1,9 +1,10 @@
 ;;;; unittest framework
 ;;;; original designed by Peter Seibel (Practical Common Lisp)
-
+(provide :unittest)
 (defpackage :unittest
   (:use :common-lisp)  ; cl パッケージのシンボルを全部インポートして使えるようにする
-  (:export :deftest)) ; deftest シンボルを API として公開する
+  (:export :deftest
+	   :check)) ; deftest シンボルを API として公開する
 
 (in-package :unittest)
 
@@ -18,7 +19,7 @@
   `(combine-results
     ,@(mapcar (lambda (_)
 		`(report-result ,_ ',_))
-	      forms))
+	      forms)))
 
 (defmacro combine-results (&body forms)
   (let ((_result (gensym)))
@@ -26,8 +27,7 @@
        ,@(mapcar (lambda (_)
 		   `(unless ,_ (setf ,_result nil)))
 		 forms)
-       ,_result))
+       ,_result)))
 
-
-
-
+(defun report-result (result form)
+  (format t "~:[FAIL~;pass~] ... ~a: ~a~%" result test-name form))
